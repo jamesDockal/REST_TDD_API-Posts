@@ -1,17 +1,6 @@
 import request from 'supertest'
 import app from '../../config/app'
 
-interface Post {
-  userId: number
-  id: number
-  title: string
-  body: string
-}
-
-interface Response {
-  body: Post[]
-}
-
 describe('Post Routes (List All) ', () => {
   it('should return status 200', async () => {
     await request(app).get('/api/posts').expect(200)
@@ -24,13 +13,13 @@ describe('Post Routes (List All) ', () => {
   })
 
   it('should post be in the right format', async () => {
-    const { body: sut }: Response = await request(app).get('/api/posts')
+    const { body: sut } = await request(app).get('/api/posts')
 
     sut.forEach((post) => {
-      expect(post).toHaveProperty('userId')
       expect(post).toHaveProperty('id')
       expect(post).toHaveProperty('title')
       expect(post).toHaveProperty('body')
+      expect(post).toHaveProperty('user')
     })
   })
 })
@@ -59,13 +48,13 @@ describe('Post Routes (List By User Id) ', () => {
   })
 
   it('should post be in the right format', async () => {
-    const { body: sut }: Response = await request(app).get('/api/posts/1')
+    const { body: sut } = await request(app).get('/api/posts/1')
 
     sut.forEach((post) => {
-      expect(post).toHaveProperty('userId')
       expect(post).toHaveProperty('id')
       expect(post).toHaveProperty('title')
       expect(post).toHaveProperty('body')
+      expect(post).toHaveProperty('user')
     })
   })
 })
