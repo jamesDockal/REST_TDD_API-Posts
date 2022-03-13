@@ -7,4 +7,6 @@ const controller = new PostRoutesController()
 
 router.get('/posts', controller.listAllPosts)
 
+router.get('/posts/:user_id', controller.listByUserId)
+
 export default router
